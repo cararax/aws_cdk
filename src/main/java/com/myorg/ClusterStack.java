@@ -5,10 +5,10 @@ import software.amazon.awscdk.StackProps;
 import software.amazon.awscdk.services.ec2.Vpc;
 import software.amazon.awscdk.services.ecs.Cluster;
 import software.constructs.Construct;
-// import software.amazon.awscdk.Duration;
-// import software.amazon.awscdk.services.sqs.Queue;
 
 public class ClusterStack extends Stack {
+
+    private Cluster cluster;
     public ClusterStack(final Construct scope, final String id, Vpc vpc) {
         this(scope, id, null, vpc);
     }
@@ -16,9 +16,13 @@ public class ClusterStack extends Stack {
     public ClusterStack(final Construct scope, final String id, final StackProps props, Vpc vpc) {
         super(scope, id, props);
 
-        Cluster.Builder.create(this, id)
+        cluster = Cluster.Builder.create(this, id)
                 .clusterName("cluster-01")
                 .vpc(vpc)
                 .build();
+    }
+
+    public Cluster getCluster() {
+        return cluster;
     }
 }
