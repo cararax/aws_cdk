@@ -11,10 +11,13 @@ public class AwsCdkApp {
         ClusterStack clusterStack = new ClusterStack(app, "Cluster", vpcStack.getVpc());
         clusterStack.addDependency(vpcStack);
 
-        Service01Stack service01 = new Service01Stack(app, "Service01", clusterStack.getCluster());
-        service01.addDependency(clusterStack);
+        RdsStack rdsStack = new RdsStack(app, "Rds", vpcStack.getVpc());
+        rdsStack.addDependency(vpcStack);
+
+        Service01Stack service01Stack = new Service01Stack(app, "Service01", clusterStack.getCluster());
+        service01Stack.addDependency(clusterStack);
+        service01Stack.addDependency(rdsStack);
 
         app.synth();
     }
 }
-
